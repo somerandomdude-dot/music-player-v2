@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Music Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <ul class="nav-tabs">
+            <li class="nav-tab" data-tab="home">Home</li>
+            <li class="nav-tab" data-tab="library">Library</li>
+            <li class="nav-tab" data-tab="playlists">Playlists</li>
+            <li class="nav-tab" data-tab="now-playing">Now Playing</li>
+            <li class="nav-tab" data-tab="upload">Upload Songs</li>
+            <li class="nav-tab" data-tab="settings">Settings</li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <section class="page active" id="home">
+            <h1 class="page-title">Welcome</h1>
+            <p class="page-subtitle">Start your music journey</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🎵</div>
+                    <div class="card-title">Recently Played</div>
+                    <div class="card-subtitle">Your recent tracks</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">🔍</div>
+                    <div class="card-title">Discover</div>
+                    <div class="card-subtitle">Find new music</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">❤️</div>
+                    <div class="card-title">Liked Songs</div>
+                    <div class="card-subtitle">Your favorites</div>
+                </div>
+            </div>
+            
+            <button class="cta-button" id="startListeningBtn">Start Listening</button>
+        </section>
+
+        <!-- Library Page -->
+        <section class="page" id="library">
+            <h1 class="page-title">Library</h1>
+            <p class="page-subtitle">Your uploaded songs</p>
+            
+            <div class="song-list" id="songList">
+                <div class="empty-state">No songs uploaded yet. Go to Upload Songs to add music.</div>
+            </div>
+        </section>
+
+        <!-- Playlists Page -->
+        <section class="page" id="playlists">
+            <h1 class="page-title">Playlists</h1>
+            
+            <div class="playlist-creator">
+                <input type="text" id="playlistNameInput" class="playlist-input" placeholder="Enter playlist name">
+                <button class="create-btn" id="createPlaylistBtn">Create Playlist</button>
+            </div>
+            
+            <div class="playlists-container" id="playlistsContainer">
+                <div class="empty-state">No playlists yet. Create one above.</div>
+            </div>
+        </section>
+
+        <!-- Now Playing Page -->
+        <section class="page" id="now-playing">
+            <div class="now-playing-container">
+                <div class="album-art" id="albumArt">
+                    <div class="album-placeholder">♪</div>
+                </div>
+                
+                <div class="song-info">
+                    <div class="song-title" id="currentSongTitle">No song selected</div>
+                    <div class="song-filename" id="currentSongFilename">Select a song to play</div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                        <div class="progress-knob" id="progressKnob"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span id="totalTime">0:00</span>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn" id="backBtn" aria-label="Previous">⏮</button>
+                    <button class="control-btn" id="rewindBtn" aria-label="Rewind 10 seconds">⏪</button>
+                    <button class="control-btn stop-btn" id="stopBtn" aria-label="Stop">⏹</button>
+                    <button class="control-btn play-pause-btn" id="playPauseBtn" aria-label="Play/Pause">▶</button>
+                    <button class="control-btn" id="forwardBtn" aria-label="Forward 10 seconds">⏩</button>
+                    <button class="control-btn" id="nextBtn" aria-label="Next">⏭</button>
+                </div>
+                
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="100">
+                    <span id="volumeValue" class="volume-value">100%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Songs Page -->
+        <section class="page" id="upload">
+            <h1 class="page-title">Upload Songs</h1>
+            <p class="page-subtitle">Add your music files</p>
+            
+            <div class="upload-options">
+                <div class="upload-card">
+                    <div class="upload-icon">📄</div>
+                    <h2>Upload Files</h2>
+                    <p>Select individual MP3 files</p>
+                    <input type="file" id="fileInput" accept="audio/mp3" multiple>
+                    <label for="fileInput" class="upload-label">Choose Files</label>
+                </div>
+                
+                <div class="upload-card">
+                    <div class="upload-icon">📁</div>
+                    <h2>Upload Folder</h2>
+                    <p>Select a folder with MP3 files</p>
+                    <input type="file" id="folderInput" webkitdirectory directory multiple>
+                    <label for="folderInput" class="upload-label">Choose Folder</label>
+                </div>
+            </div>
+            
+            <div class="upload-status-container">
+                <div class="upload-status" id="uploadStatus"></div>
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-bar-upload">
+                        <div class="progress-fill-upload" id="progressFillUpload"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">0%</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Page -->
+        <section class="page" id="settings">
+            <h1 class="page-title">Settings</h1>
+            
+            <div class="settings-list">
+                <div class="setting-item">
+                    <span class="setting-label">Dark Mode</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Animations</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="animationsToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Rounded Corners</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="roundedCornersToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Hidden Audio Element -->
+    <audio id="audioPlayer" preload="metadata"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
